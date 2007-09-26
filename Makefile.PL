@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.8 2007/09/10 17:43:45 mike Exp $
+# $Id: Makefile.PL,v 1.9 2007/09/26 12:15:40 mike Exp $
 
 use 5.008;
 use ExtUtils::MakeMaker;
@@ -29,6 +29,7 @@ WriteMakefile(
 	"XML::LibXML" => 1.59,
 	"MARC::Record" => 1.38,
 	"MARC::File::XML" => 0.84,
+	"Time::HiRes" => 1.86,
     },
     ABSTRACT_FROM => 'lib/Net/Z3950/Simple2ZOOM.pm',
     AUTHOR        => 'Sebastian Hammer <quinn@indexdata.com> and colleagues',

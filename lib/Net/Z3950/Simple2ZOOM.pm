@@ -1,4 +1,4 @@
-# $Id: Simple2ZOOM.pm,v 1.58 2007/09/18 11:21:20 mike Exp $
+# $Id: Simple2ZOOM.pm,v 1.59 2007/09/26 12:17:58 mike Exp $
 
 package Net::Z3950::Simple2ZOOM;
 
@@ -16,9 +16,11 @@ use URI::Escape;
 use XML::LibXML;
 use MARC::Record;
 use MARC::File::XML;
+use Time::HiRes qw(gettimeofday tv_interval);
 
 our @ISA = qw();
-our $VERSION = '1.00';
+our $VERSION = '1.01';
+our $TIME = 1;
 
 
 =head1 NAME
@@ -280,7 +282,9 @@ sub _real_fetch_handler {
 	warn "Requesting schema '$schema' = " . $rs->option("schema") . "\n";
     }
 
+    my $t0 = [ gettimeofday() ];
     my $rec = $rs->record($args->{OFFSET} - 1);
+    print "elapsed: record = ", tv_interval($t0), "\n" if $TIME;
     my $xml = $rec->get('xml', $map);
 
     # Surrogate diagnostics should be detected by ZOOM-C and testable
@@ -319,8 +323,12 @@ sub _real_fetch_handler {
     if (defined $sconfig) {
 	my $encoding = $sconfig->{encoding} || "UTF-8";
 	my $format = $sconfig->{format} || "MARC21";
+	my $t0 = [ gettimeofday() ];
 	my $rec = MARC::Record->new_from_xml($xml, $encoding, $format);
+	print "elapsed: parse = ", tv_interval($t0), "\n" if $TIME;
 	$args->{RECORD} = $rec->as_usmarc();
+	$t0 = [ gettimeofday() ];
+	print "elapsed: usmarc = ", tv_interval($t0), "\n" if $TIME;
     } else {
 	$args->{RECORD} = _format($xml, $args->{REQ_FORM}, $dbconfig);
     }
@@ -389,7 +397,9 @@ sub _real_scan_handler {
     }
 
     #warn "about to scan";
+    my $t0 = [ gettimeofday() ];
     my $ss = $connection->scan($query);
+    print "elapsed: scan = ", tv_interval($t0), "\n" if $TIME;
     my $n = $ss->size();
     #warn "scanset=$ss, n=$n\n";
     $args->{STATUS} = ($n == $args->{NUMBER}) ?
@@ -704,7 +714,9 @@ sub _do_search {
 
     my $conn = _get_connection($session, $zdbname, $dbconfig);
     $conn->option(presentChunk => 0);
+    my $t0 = [ gettimeofday() ];
     my $rs = $conn->search($query);
+    print "elapsed: search = ", tv_interval($t0), "\n" if $TIME;
     $search->{resultset} = $rs;
     $search->{hits} = $rs->size();
     $search->{rsid} = $rs->option("resultSetId");
@@ -722,10 +734,6 @@ sub _get_connection {
 	my $options = new ZOOM::Options();
 	$options->option(presentChunk => 10);
 	$options->option(preferredRecordSyntax => "xml");
-	if (0) {
-	    # My Zebra build rejects v1.2 clients -- oops
-	    $options->option(sru_version => "1.2"); # If available
-	}
 
 	my $user = $session->{username};
 	if (defined $user && $user ne "") {

@@ -1,7 +1,7 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Net-Z3950-Simple2ZOOM
-version:      1.00
+version:      1.01
 version_from: lib/Net/Z3950/Simple2ZOOM.pm
 installdirs:  site
 requires:
@@ -11,6 +11,7 @@ requires:
     MARC::Record:                  1.38
     Net::Z3950::SimpleServer:      1.08
     Net::Z3950::ZOOM:              1.19
+    Time::HiRes:                   1.86
     URI::Escape:                   3.28
     XML::LibXML:                   1.59
     XML::Simple:                   2.14

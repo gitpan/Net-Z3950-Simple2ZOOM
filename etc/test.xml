@@ -44,6 +44,8 @@
   <database name="srubooks">
     <zurl>http://z3950.loc.gov:7090/voyager</zurl>
     <option name="sru">get</option>
+    <!-- Force version 1.1 as older YAZ Proxy builds reject v1.2 -->
+    <option name="sru_version">1.1</option>
     <charset>marc-8</charset>
     <search>
       <querytype>cql</querytype>

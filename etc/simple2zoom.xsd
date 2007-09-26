@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <!-- $Id: simple2zoom.rnc,v 1.9 2007/09/10 17:14:07 mike Exp $ -->
+  <!-- $Id: simple2zoom.rnc,v 1.10 2007/09/14 14:35:40 mike Exp $ -->
   <!-- Simple2ZOOM configuration XML is not in any namespace. -->
   <xs:element name="client">
     <xs:complexType>
