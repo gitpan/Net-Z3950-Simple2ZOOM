@@ -1,4 +1,4 @@
-# $Id: Simple2ZOOM.pm,v 1.59 2007/09/26 12:17:58 mike Exp $
+# $Id: Simple2ZOOM.pm,v 1.61 2007-11-23 12:13:20 mike Exp $
 
 package Net::Z3950::Simple2ZOOM;
 
@@ -19,7 +19,7 @@ use MARC::File::XML;
 use Time::HiRes qw(gettimeofday tv_interval);
 
 our @ISA = qw();
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our $TIME = 1;
 
 
@@ -253,11 +253,19 @@ sub _real_present_handler {
     my $set = $session->{resultsets}->{$args->{SETNAME}};
     _throw(30, $args->{SETNAME}) if !$set; # Result set does not exist
 
+    my $start = $args->{START};
+    my $number = $args->{NUMBER};
+
     # Present out of range.  This is actually not necessary, as the
     # GFS makes the check and the present-handler is not called if it
     # fails.
-    _throw(13) if ($args->{START} > $set->{hits} ||
-		   $args->{START} + $args->{NUMBER} - 1 > $set->{hits});
+    _throw(13) if ($start > $set->{hits} ||
+		   $start + $number - 1 > $set->{hits});
+
+    my $rs = $set->{resultset};
+    #warn "about to request $number records from $start";
+    $rs->records($start, $number, 0);
+    #warn "request $number records from $start";
 }
 
 
