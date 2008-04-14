@@ -1,6 +1,20 @@
-$Id: Changes,v 1.36 2007-11-23 12:14:39 mike Exp $
+$Id: Changes,v 1.38 2008-04-14 10:35:32 mike Exp $
 
 Revision history for Perl extension Net::Z3950::Simple2ZOOM.
+
+1.03  Mon Apr 14 11:35:24 BST 2008
+	Improvements to _format_grs1(), provided by Simon Jacob of the
+	National Library of Australia <sjacob@nla.gov.au>:
+	- The namespace prefix "x" is made available for GRS-1 record
+	  configuration to refer to the top-level namespace.
+	- Multiple occurrences of the same XML element are now
+	  translated into separate occurrences of the corresponding
+	  GRS-1 element rather than being concatenated into a single
+	  value.
+	Also:
+	- Reporting of exception-handling is now requested by setting
+	  the S2Z_EXCEPTION_DEBUG environment variable to 1 (or 2 for
+	  extra verbosity).
 
 1.02  Fri Nov 23 12:10:35 GMT 2007
 	- Use the present handler to optimise situations in which the

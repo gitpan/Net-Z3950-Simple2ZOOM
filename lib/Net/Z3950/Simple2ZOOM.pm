@@ -1,4 +1,4 @@
-# $Id: Simple2ZOOM.pm,v 1.61 2007-11-23 12:13:20 mike Exp $
+# $Id: Simple2ZOOM.pm,v 1.66 2008-04-14 10:34:17 mike Exp $
 
 package Net::Z3950::Simple2ZOOM;
 
@@ -19,7 +19,7 @@ use MARC::File::XML;
 use Time::HiRes qw(gettimeofday tv_interval);
 
 our @ISA = qw();
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 our $TIME = 1;
 
 
@@ -123,18 +123,21 @@ sub _scan_handler { _eval_wrapper(\&_real_scan_handler, @_) }
 sub _sort_handler { _eval_wrapper(\&_real_sort_handler, @_) }
 
 
+# This can be used by the _real_*_handler() callbacks to signal
+# exceptions that will be caught by _eval_wrapper() and translated
+# into BIB-1 diagnostics for the client
+#
 sub _throw {
     my($code, $addinfo, $diagset) = @_;
     $diagset ||= "Bib-1";
-    my $x = new ZOOM::Exception($code, undef, $addinfo, $diagset);
-    die $x;
+    die new ZOOM::Exception($code, undef, $addinfo, $diagset);
 }
 
 
 sub _eval_wrapper {
     my $coderef = shift();
     my $args = shift();
-    my $warn = 0;
+    my $warn = $ENV{S2Z_EXCEPTION_DEBUG} || 0;
 
     eval {
 	&$coderef($args, @_);
@@ -151,8 +154,7 @@ sub _eval_wrapper {
 	    $args->{ERR_STR} = $@->addinfo();
 	} elsif ($@->diagset() eq 'ZOOM' &&
 		 $@->code() eq ZOOM::Error::CONNECT) {
-	    # Special case for when the host is down, as required by
-	    # the NLA specification
+	    # Special case for when the host is down
 	    warn "Special case: host unavailable" if $warn > 0;
 	    $args->{ERR_CODE} = 109;
 	    $args->{ERR_STR} = $@->addinfo();
@@ -829,14 +831,19 @@ sub _format_grs1 {
 
     my $res = "";
     my $parser = new XML::LibXML();
+    $parser->clean_namespaces(1);
     my $node = $parser->parse_string($xml)->documentElement();
+    my $xc = XML::LibXML::XPathContext->new($node);
+    $xc->registerNs(x => $node->namespaceURI());
+
     foreach my $field (@{ $config->{field} }) {
 	my $xpath = $field->{xpath};
-	my $data = _trim_nl($node->findvalue($xpath));
-	next if !defined $data || $data eq "";
-
-	$data =~ s/\n/ /gs;
-	$res .= $field->{content} . " " . $data . "\n";
+        foreach my $datanode ($xc->findnodes($xpath, $node)) {
+	    my $data = _trim_nl($datanode->textContent);
+	    next if !defined $data || $data eq "";
+	    $data =~ s/\n/ /gs;
+	    $res .= $field->{content} . " " . $data . "\n";
+	}
     }
 
     return $res;
