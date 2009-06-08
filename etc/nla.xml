@@ -1,4 +1,4 @@
-<!-- $Id: nla.xml,v 1.1 2007/08/10 22:08:19 mike Exp $ -->
+<!-- $Id: nla.xml,v 1.1 2007-08-10 22:08:19 mike Exp $ -->
 <client>
   <database name="anbd">
     <!-- This ZURL is wrong, but it is at least a bibliographic SRU server -->

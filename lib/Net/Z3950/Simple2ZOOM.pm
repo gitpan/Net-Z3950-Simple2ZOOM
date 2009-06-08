@@ -1,4 +1,4 @@
-# $Id: Simple2ZOOM.pm,v 1.66 2008-04-14 10:34:17 mike Exp $
+# $Id: Simple2ZOOM.pm,v 1.68 2009-04-08 12:27:51 mike Exp $
 
 package Net::Z3950::Simple2ZOOM;
 
@@ -19,7 +19,7 @@ use MARC::File::XML;
 use Time::HiRes qw(gettimeofday tv_interval);
 
 our @ISA = qw();
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 our $TIME = 1;
 
 
@@ -266,7 +266,7 @@ sub _real_present_handler {
 
     my $rs = $set->{resultset};
     #warn "about to request $number records from $start";
-    $rs->records($start, $number, 0);
+    $rs->records($start-1, $number, 0);
     #warn "request $number records from $start";
 }
 

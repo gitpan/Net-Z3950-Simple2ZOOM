@@ -1,6 +1,10 @@
-$Id: Changes,v 1.38 2008-04-14 10:35:32 mike Exp $
+$Id: Changes,v 1.40 2009-06-08 15:34:37 mike Exp $
 
 Revision history for Perl extension Net::Z3950::Simple2ZOOM.
+
+1.04  Mon Jun  8 16:31:57 BST 2009
+	- Fix off-by-one in Present handler, as suggested by Simon
+	  Jacob of the National Library of Australia.
 
 1.03  Mon Apr 14 11:35:24 BST 2008
 	Improvements to _format_grs1(), provided by Simon Jacob of the

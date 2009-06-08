@@ -1,4 +1,4 @@
-# $Id: sru-auth,v 1.1 2007/08/21 12:21:56 mike Exp $
+# $Id: sru-auth,v 1.1 2007-08-21 12:21:56 mike Exp $
 
 # In order to test the authentication feature of Simple2ZOOM, we need
 # an authenticator script, accessible via HTTP.  The simplest way to

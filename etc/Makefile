@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.6 2007/08/31 11:58:17 mike Exp $
+# $Id: Makefile,v 1.6 2007-08-31 11:58:17 mike Exp $
 
 STUFF = simple2zoom.rng simple2zoom.dtd simple2zoom.xsd
 

@@ -1,5 +1,5 @@
 # CCL field mappings
-# $Id: ccl-qualifiers,v 1.1 2007/08/13 16:38:05 mike Exp $
+# $Id: ccl-qualifiers,v 1.1 2007-08-13 16:38:05 mike Exp $
 # 
 # The rule below is used when no fields are specified
 term t=l,r  s=al

@@ -3,7 +3,7 @@
 # simple2zoom -- Swiss-army simpleserver-->zoom gateway
 # Copyright (c) 2006 Index Data
 # Written by Sebastian Hammer and Mike Taylor
-# $Id: simple2zoom,v 1.18 2007/09/07 11:43:19 mike Exp $
+# $Id: simple2zoom,v 1.18 2007-09-07 11:43:19 mike Exp $
 #
 # Run like this:
 #	perl -I../lib ./simple2zoom -c ../etc/test.xml @:9998

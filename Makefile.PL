@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.9 2007/09/26 12:15:40 mike Exp $
+# $Id: Makefile.PL,v 1.10 2009-06-08 15:31:35 mike Exp $
 
 use 5.008;
 use ExtUtils::MakeMaker;
@@ -28,7 +28,7 @@ WriteMakefile(
 	"URI::Escape" => 3.28,
 	"XML::LibXML" => 1.59,
 	"MARC::Record" => 1.38,
-	"MARC::File::XML" => 0.84,
+	"MARC::File::XML" => 0.84, # Debian package libmarc-xml-perl
 	"Time::HiRes" => 1.86,
     },
     ABSTRACT_FROM => 'lib/Net/Z3950/Simple2ZOOM.pm',

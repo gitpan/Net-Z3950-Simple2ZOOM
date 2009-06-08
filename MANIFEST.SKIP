@@ -1,4 +1,4 @@
-# $Id: MANIFEST.SKIP,v 1.4 2007/08/16 12:14:11 mike Exp $
+# $Id: MANIFEST.SKIP,v 1.4 2007-08-16 12:14:11 mike Exp $
 
 .cvsignore
 CVS

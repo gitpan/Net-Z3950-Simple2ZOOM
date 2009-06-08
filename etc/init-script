@@ -2,7 +2,7 @@
 #
 # Start/stop script for the simple2zoom SRU gateway
 #
-# $Id: init-script,v 1.1 2007/07/06 15:31:51 mike Exp $
+# $Id: init-script,v 1.1 2007-07-06 15:31:51 mike Exp $
 #
 
 set -e
